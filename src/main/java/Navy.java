@@ -1,25 +1,68 @@
-import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Navy
 {
+    /**
+     * CREACIÓN DE ATRIBUTOS DE LA CLASE
+     */
     private String name;
 
-    private List<Ship> ships;
+    /**
+     * CREACIÓN DE LOS ARRAYLIST DE LAS COSAS QUE CONTINE LA NAVY
+     */
+    private List<Ship> ships=new ArrayList<>();
     private List<AircraftCarrier> carriers= new ArrayList<>();
     private List<Aircraft> aircrafts=new ArrayList<>();
-    private List<Marine> marines;
+    private List<Marine> marines=new ArrayList<>();
     private Board board=new Board();
+    private ArrayList<Object> damagedMachines = new ArrayList<>();
+
+    private static Set<String> ac = new HashSet<>();
 
     private int aircraftCapacity;
 
     public final int code=0;
 
+    /**
+     * CREACIÓN DEL CONTRUCTOR DE LA CLASE NAVY
+     * @param name
+     */
+
     public Navy(String name)
     {
         this.name=name;
     }
+
+    /**
+     * Creación de métodos getters para los arraylist de las maáquinas de la flota
+     * @return los arraylist de cada tipo de maquinas que contiene la flota
+     */
+    public List<AircraftCarrier> getCarriers() {
+        return carriers;
+    }
+    public List<Aircraft> getAircrafts() {
+        return aircrafts;
+    }
+    public List<Ship> getShips(){
+        return this.ships;
+    }
+
+    /**
+     * Creación del método getter para el atributo del nombre de la flota
+     * @return
+     */
+    public String getName()
+    {
+        return this.name;
+    }
+
+    /**
+     * Ejercicio de digrama de memoria
+     */
+
 
     public void navyCreation()
     {
@@ -68,12 +111,6 @@ public class Navy
         n2.ships.add(s1);
     }
 
-
-    public String getName()
-    {
-        return this.name;
-    }
-
     /*
      * Consulta el número de flotas que tienen su mismo nombre
      *
@@ -90,27 +127,15 @@ public class Navy
      */
     public int disponibilidadEnPortaAviones()
     {
-
-        int count = 0;
-        for(int i=0;i<aircrafts.size();i++)
+        int result=0;
+        for(int i=0; getCarriers().size()>i;i++)
         {
-            count++;
+            result=getCarriers().get(i).getCapacity()-getAircrafts().size();
         }
-        return aircraftCreation()-count;
-    }
-    public int aircraftCreation()
-    {
-        AircraftCarrier ac = new AircraftCarrier(2,10);
-        return  ac.getCapacity();
+        return result;
     }
 
-    public List<AircraftCarrier> getCarriers() {
-        return carriers;
-    }
 
-    public List<Aircraft> getAircrafts() {
-        return aircrafts;
-    }
 
     /**
      * Consulta la placa de los aviones enemigos que están en el aire
@@ -119,9 +144,18 @@ public class Navy
      */
     public ArrayList<String> enAire()
     {
+        ArrayList<String> ia = new ArrayList<>();
 
-        return enAire();
+        for (int i = 0; i< getAircrafts().size();i++)
+        {
+            if (getAircrafts().get(i).isInAir()==true)
+            {
+                ia.add(getAircrafts().get(i).getLicencePlate());
+            }
+        }
+            return ia;
     }
+
     /**
      * Verifica si una ubicación de ataque en agua es adecuado(destruye elementos
      * enemigos sin ocasionar bajas propias)
@@ -130,9 +164,24 @@ public class Navy
      *   longitud - longitud de la explosion
      *   latitud - latitud de la explosion
      */
-    public boolean esBuenAtaque(int longitud, int latitud)
+    public boolean esBuenAtaque(int latitude, int longitude)
     {
-        return false;
+        boolean result = true;
+        for (int i=0;i<this.getShips().size();i++)
+        {
+            if((latitude==this.getShips().get(i).getLocation().getLatitude()&&longitude==this.getShips().get(i).getLocation().getLongitude()))
+            {
+                result = false;
+            }
+        }
+        for (int i=0;i<this.getCarriers().size();i++)
+        {
+            if(latitude==this.getCarriers().get(i).getLocation().getLatitude()&&longitude==this.getCarriers().get(i).getLocation().getLongitude())
+            {
+                result = false;
+            }
+        }
+        return result;
     }
     /**
      * Mueve todos los barcos la distancia definida
@@ -141,9 +190,12 @@ public class Navy
      *   deltaLongitud - avance en longitud
      *   deltaLatitud - avance en latitud
      */
-    public void muevase(int deltaLongitud, int deltaLatitud)
+    public void muevase(int deltaLatitud, int deltaLongitud)
     {
-
+        for (int i = 0;i<getShips().size();i++)
+        {
+            getShips().get(i).setLocation(new Position(getShips().get(i).getLocation().getLatitude()+deltaLatitud,getShips().get(i).getLocation().getLongitude()+deltaLongitud));
+        }
     }
     /**
      * Consulta el numero de maquinas que tiene la flota
@@ -152,7 +204,16 @@ public class Navy
      */
     public int numeroMaquinas()
     {
-        return 0;
+        return this.machinesCalculator();
+    }
+
+    /**
+     * Calcula el número de máquinas que tiene las flotas
+     * @return
+     */
+    public int machinesCalculator()
+    {
+        return this.getAircrafts().size()+this.getShips().size()+this.getCarriers().size();
     }
     /**
      * Consulta si puede confundir sus aviones con aviones enemigos considerando
@@ -160,10 +221,18 @@ public class Navy
      *
      * @returns: si hay problema en aire
      */
-    public boolean problemaEnAire()
+    public boolean problemaEnAire(List<String> n)
     {
-        return false;
+        boolean result = false;
+
+        for (int i = 0;i<n.size();i++)
+        {
+            result=ac.add(n.get(i));
+        }
+
+        return !result;
     }
+
     /**
      * Consulta si cuenta con suficientes marinos para conducir sus máquinas.
      * Un portaaviones requiere cinco marinos; un barco, 4; y un avión 2.
@@ -172,7 +241,31 @@ public class Navy
      */
     public boolean suficientesMarinos()
     {
-        return false;
+        boolean result = false;
+        for (int i = 0;i<getAircrafts().size();i++)
+        {
+            if (getAircrafts().get(i).getMarines().size()==getAircrafts().get(i).crewMembers)
+            {
+                result=true;
+            }
+        }
+        for (int i = 0;i<getShips().size();i++)
+        {
+            if (getShips().get(i).getMarines().size()==getShips().get(i).crewMembers)
+            {
+
+                result=true;
+            }
+        }
+        for (int i = 0;i<getCarriers().size();i++)
+        {
+            if (getCarriers().get(i).getMarines().size()==getCarriers().get(i).crewMembers)
+            {
+                result=true;
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -184,8 +277,30 @@ public class Navy
      */
     public ArrayList<Object> seranDestruidas(int longitud,int latitud)
     {
-        return seranDestruidas(0,0);
+        for(int i=0;getCarriers().size()>i;i++)
+        {
+            if(getCarriers().get(i).getLocation().getLongitude() == longitud && getCarriers().get(i).getLocation().getLatitude() == latitud)
+            {
+                this.damagedMachines.add(getCarriers().get(i));
+            }
+        }
+
+        for(int i=0;getShips().size()>i;i++)
+        {
+            if(getShips().get(i).getLocation().getLongitude() == longitud && getShips().get(i).getLocation().getLatitude() == latitud)
+            {
+                this.damagedMachines.add(getShips().get(i));
+            }
+        }
+
+        return this.damagedMachines;
     }
+
+    /**
+     * Override al método equals para que no compare por el espacio de memoria, si no por el nombre de la flota
+     * @param o
+     * @return True o false dependiendo de la comparación entre los dos objetos
+     */
     @Override
     public boolean equals(Object o)
     {
@@ -200,7 +315,4 @@ public class Navy
         Navy n = (Navy)o;
         return this.name == board.getAlias();
     }
-
-
-
 }

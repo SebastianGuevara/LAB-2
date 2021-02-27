@@ -6,6 +6,14 @@ public class Position
     public Position(int latitude, int longitude)
     {
         this.latitude=latitude;
-        this.latitude=longitude;
+        this.longitude=longitude;
+    }
+
+    public int getLatitude() {
+        return this.latitude;
+    }
+
+    public int getLongitude() {
+        return this.longitude;
     }
 }

@@ -38,7 +38,8 @@ public class Board
         return navies;
     }
 
-    public String getAlias() {
-        return alias;
+    public String getAlias()
+    {
+        return this.alias;
     }
 }
