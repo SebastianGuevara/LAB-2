@@ -134,9 +134,6 @@ public class Navy
         }
         return result;
     }
-
-
-
     /**
      * Consulta la placa de los aviones enemigos que están en el aire
      *
@@ -206,7 +203,6 @@ public class Navy
     {
         return this.machinesCalculator();
     }
-
     /**
      * Calcula el número de máquinas que tiene las flotas
      * @return
@@ -241,12 +237,13 @@ public class Navy
      */
     public boolean suficientesMarinos()
     {
+        boolean a = false, ac=false,s=false;
         boolean result = false;
         for (int i = 0;i<getAircrafts().size();i++)
         {
             if (getAircrafts().get(i).getMarines().size()==getAircrafts().get(i).crewMembers)
             {
-                result=true;
+                a=true;
             }
         }
         for (int i = 0;i<getShips().size();i++)
@@ -254,15 +251,19 @@ public class Navy
             if (getShips().get(i).getMarines().size()==getShips().get(i).crewMembers)
             {
 
-                result=true;
+                s=true;
             }
         }
         for (int i = 0;i<getCarriers().size();i++)
         {
             if (getCarriers().get(i).getMarines().size()==getCarriers().get(i).crewMembers)
             {
-                result=true;
+                ac=true;
             }
+        }
+        if (a&&s&&ac)
+        {
+            result = true;
         }
 
         return result;

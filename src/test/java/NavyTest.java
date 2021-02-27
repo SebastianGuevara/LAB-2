@@ -91,7 +91,6 @@ public class NavyTest
         n1.getCarriers().add(ac1);
         n2.getCarriers().add(ac2);
 
-
         assertTrue(n1.esBuenAtaque(20,20));
         assertFalse(n1.esBuenAtaque(30,30));
         assertFalse(n1.esBuenAtaque(10,10));
@@ -212,14 +211,16 @@ public class NavyTest
 
         assertFalse(n1.suficientesMarinos());
 
+        s1.getMarines().add(m11);
+
+        assertFalse(n1.suficientesMarinos());
+
         a1.getMarines().add(m9);
         ac1.getMarines().add(m10);
-        s1.getMarines().add(m11);
 
         assertTrue(n1.suficientesMarinos());
 
     }
-
     @Test
     @DisplayName("GIVEN a position WHEN making an attack THEN return arraylist of machines affected by explosion")
     public void shouldCheckForDamageMachines()

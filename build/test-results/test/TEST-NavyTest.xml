@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="NavyTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2021-02-27T04:20:15" hostname="DESKTOP-5GU2UV0" time="0.056">
+<testsuite name="NavyTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-02-27T17:01:14" hostname="DESKTOP-5GU2UV0" time="0.03">
   <properties/>
-  <testcase name="GIVEN a list of navies WHEN checking for repeated alias THEN display the number of navies with the same name" classname="NavyTest" time="0.028"/>
-  <testcase name="GIVEN a aircraft WHEN its in the air THEN return the lincencePlate" classname="NavyTest" time="0.004"/>
-  <testcase name="GIVEN a ship WHEN giving coordinates THEN move to that coordinates" classname="NavyTest" time="0.002"/>
-  <testcase name="GIVEN a position WHEN making an attack THEN return arraylist of machines affected by explosion" classname="NavyTest" time="0.002"/>
-  <testcase name="GIVEN a navy WHEN calculating the number of its machines THEN return the number of machines" classname="NavyTest" time="0.001"/>
-  <testcase name="GIVEN a aircraft carrier with quota WHEN trying to calculate the availability THEN return the availability" classname="NavyTest" time="0.001"/>
-  <testcase name="GIVEN the navy machines WHEN using a machine THEN return if there are sufficient machines" classname="NavyTest" time="0.004"/>
-  <testcase name="GIVEN enemy aircraft WHEN having same lincesePlate THEN return if there are or not air problems" classname="NavyTest" time="0.001"/>
-  <testcase name="GIVEN a position WHEN a navy attack THEN return if it is adecuate  or not" classname="NavyTest" time="0.002"/>
+  <testcase name="GIVEN a position WHEN making an attack THEN return arraylist of machines affected by explosion" classname="NavyTest" time="0.03"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
