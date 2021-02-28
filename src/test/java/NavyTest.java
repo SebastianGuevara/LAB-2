@@ -108,12 +108,21 @@ public class NavyTest
         n1.getShips().add(s1);
         n1.getShips().add(s2);
 
+
         n1.muevase(10,15);
 
         assertEquals(20,s1.getLocation().getLatitude());
         assertEquals(25,s1.getLocation().getLongitude());
         assertEquals(30,s2.getLocation().getLatitude());
         assertEquals(40,s2.getLocation().getLongitude());
+
+        n1.muevase(99,99);
+
+        assertEquals(20,s1.getLocation().getLatitude());
+        assertEquals(25,s1.getLocation().getLongitude());
+        assertEquals(30,s2.getLocation().getLatitude());
+        assertEquals(40,s2.getLocation().getLongitude());
+        
     }
 
     @Test

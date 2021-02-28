@@ -191,7 +191,15 @@ public class Navy
     {
         for (int i = 0;i<getShips().size();i++)
         {
-            getShips().get(i).setLocation(new Position(getShips().get(i).getLocation().getLatitude()+deltaLatitud,getShips().get(i).getLocation().getLongitude()+deltaLongitud));
+            if(this.board.MaxLatitude>=deltaLatitud+this.ships.get(i).getLocation().getLatitude()&&this.board.MinLatitude<=deltaLatitud+this.ships.get(i).getLocation().getLatitude())
+            {
+                if (this.board.MaxLongitude>=deltaLongitud&&this.board.MinLongitude<=deltaLongitud)
+                {
+                    getShips().get(i).setLocation(new Position(getShips().get(i).getLocation().getLatitude()+deltaLatitud,getShips().get(i).getLocation().getLongitude()+deltaLongitud));
+                    System.out.println(getShips().get(i).getLocation().getLatitude()+" "+getShips().get(i).getLocation().getLongitude());
+
+                }
+            }
         }
     }
     /**
